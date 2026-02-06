@@ -11,6 +11,10 @@ export default function RootLayout() {
         name="(tabs)"
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="request_screen"
+        options={{ headerShown: false  }}
+      />
     </Stack>
   );
 }
