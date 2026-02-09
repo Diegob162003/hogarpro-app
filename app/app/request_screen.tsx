@@ -1,13 +1,20 @@
 /* ===== IMPORTS ===== */
+
+// Helper para verificar si todos los campos requeridos están completos
+function isFormValid({ date, time, address }: { date: string; time: string; address: string }) {
+  return !!date && !!time && !!address;
+}
 // React: hook para guardar el estado del formulario
 import { useState } from "react";
 // React Native: componentes para construir la interfaz
-import {View,Text,StyleSheet,ScrollView,KeyboardAvoidingView,Platform} from "react-native";
+import {View,Text,StyleSheet,ScrollView,KeyboardAvoidingView,Platform, Pressable, Modal, TouchableOpacity} from "react-native";
 // Expo Router: navegación y parámetros entre pantallas
 import { useLocalSearchParams, useRouter } from "expo-router";
 // Iconos (flecha para el botón Volver)
 import { Ionicons } from "@expo/vector-icons";
-import { Pressable } from "react-native";
+
+// Biblioteca para seleccionar fecha y hora (native)
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 // Componentes propios del proyecto para el formulario
 import { Button } from "@/components/ui/button";
@@ -22,6 +29,7 @@ export interface RequestData {
   time: string;
   address: string;
   notes: string;
+  phone: string;
 }
 
 /* ===== COMPONENTE PRINCIPAL ===== */
@@ -39,12 +47,17 @@ export default function RequestScreen() {
     time: "",
     address: "",
     notes: "",
+    phone: "",
   });
+
+  // Estados para mostrar/ocultar los selectores y guardar valor temporal
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
 
   /* --- Enviar formulario --- */
   // Se ejecuta al pulsar "Confirmar Solicitud"; navega a confirmación con los datos
   const handleSubmit = () => {
-    if (formData.date && formData.time && formData.address) {
+    if (formData.date && formData.time && formData.address && formData.phone) {
       router.push({
         pathname: "/confirmation",
         params: {
@@ -53,6 +66,7 @@ export default function RequestScreen() {
           time: formData.time,
           address: formData.address,
           notes: formData.notes,
+          phone: formData.phone,
         },
       });
     }
@@ -64,10 +78,35 @@ export default function RequestScreen() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  /* --- Handlers para fecha/hora --- */
+  const handleSelectDate = (_event: any, selectedDate?: Date) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      // formatear: YYYY-MM-DD
+      const yyyy = selectedDate.getFullYear();
+      const mm = String(selectedDate.getMonth() + 1).padStart(2, "0");
+      const dd = String(selectedDate.getDate()).padStart(2, "0");
+      handleChange("date", `${yyyy}-${mm}-${dd}`);
+    }
+  };
+
+  const handleSelectTime = (_event: any, selectedTime?: Date) => {
+    setShowTimePicker(false);
+    if (selectedTime) {
+      // formatear: HH:MM
+      const hh = String(selectedTime.getHours()).padStart(2, "0");
+      const min = String(selectedTime.getMinutes()).padStart(2, "0");
+      handleChange("time", `${hh}:${min}`);
+    }
+  };
+
   /* --- Validación --- */
   // true si fecha, hora y dirección están completos (el botón se habilita)
   const isFormValid =
-    !!formData.date && !!formData.time && !!formData.address;
+    !!formData.date && 
+    !!formData.time && 
+    !!formData.address && 
+    !!formData.phone;
 
   /* ===== RENDER ===== */
   return (
@@ -107,30 +146,77 @@ export default function RequestScreen() {
             {/* Campo: fecha del servicio */}
             <View style={styles.field}>
               <Label>Fecha</Label>
-              <Input
-                placeholder="YYYY-MM-DD"
-                value={formData.date}
-                onChangeText={(v) => handleChange("date", v)}
-              />
+              <TouchableOpacity
+                style={styles.selectTouchable}
+                onPress={() => setShowDatePicker(true)}
+                accessibilityRole="button"
+                activeOpacity={0.7}
+              >
+                <Text style={[styles.selectText, !formData.date && styles.selectPlaceholder]}>
+                  {formData.date ? formData.date : "Selecciona una fecha"}
+                </Text>
+              </TouchableOpacity>
+              {showDatePicker && (
+                <DateTimePicker
+                  value={formData.date ? new Date(formData.date) : new Date()}
+                  mode="date"
+                  display={Platform.OS === "ios" ? "spinner" : "default"}
+                  onChange={handleSelectDate}
+                  minimumDate={new Date()}
+                />
+              )}
             </View>
 
             {/* Campo: hora del servicio */}
             <View style={styles.field}>
               <Label>Hora</Label>
-              <Input
-                placeholder="HH:MM"
-                value={formData.time}
-                onChangeText={(v) => handleChange("time", v)}
-              />
+              <TouchableOpacity
+                style={styles.selectTouchable}
+                onPress={() => setShowTimePicker(true)}
+                accessibilityRole="button"
+                activeOpacity={0.7}
+              >
+                <Text style={[styles.selectText, !formData.time && styles.selectPlaceholder]}>
+                  {formData.time ? formData.time : "Selecciona una hora"}
+                </Text>
+              </TouchableOpacity>
+              {showTimePicker && (
+                <DateTimePicker
+                  value={
+                    formData.time
+                      ? (() => {
+                          // Convertir "HH:MM" a Date
+                          const fakeDate = new Date();
+                          const [hour, min] = formData.time.split(":");
+                          fakeDate.setHours(Number(hour) || 12, Number(min) || 0, 0, 0);
+                          return fakeDate;
+                        })()
+                      : new Date()
+                  }
+                  mode="time"
+                  display={Platform.OS === "ios" ? "spinner" : "default"}
+                  onChange={handleSelectTime}
+                />
+              )}
             </View>
 
             {/* Campo: dirección donde se realizará el servicio */}
             <View style={styles.field}>
-              <Label>Dirección</Label>
+              <Label>Dirección donde se realizará el servicio (completa)</Label>
               <Input
                 placeholder="Ingresa tu dirección completa"
                 value={formData.address}
                 onChangeText={(v) => handleChange("address", v)}
+              />
+            </View>
+
+            {/* Campo: teléfono del usuario */}
+            <View style={styles.field}>
+              <Label>Número de tu whatsapp para contactarte</Label>
+              <Input
+                placeholder="Ej. 3123456789"
+                value={formData.phone}
+                onChangeText={(v) => handleChange("phone", v)}
               />
             </View>
 
@@ -223,6 +309,23 @@ const styles = StyleSheet.create({
   },
   field: {
     marginBottom: 4,
+  },
+  selectTouchable: {
+    backgroundColor: "#F9FAFB",
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    borderRadius: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    justifyContent: "center",
+    marginBottom: 16,
+  },
+  selectText: {
+    fontSize: 16,
+    color: "#111827",
+  },
+  selectPlaceholder: {
+    color: "#9CA3AF",
   },
   submitButton: {
     width: "100%",
