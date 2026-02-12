@@ -22,16 +22,19 @@ export default function Home() {
         { text: "¿Qué SÍ incluye?\n", bold: true },
         { text: "• Barrer y trapear pisos\n" },
         { text: "• Limpieza profunda de baños (lavamanos, sanitario y ducha)\n" },
-        { text: "• Limpieza profunda de cocina (estufa, mesones y superficies)\n" },
+        { text: "• Limpieza de mantenimiento de cocina (estufa, mesones y superficies, gabinetes)\n" },
         { text: "• Deshecho de basuras\n" },
+        { text: "• Limpieza interna de nevera y horno microondas y gabinetes\n" },
+        { text: "• Limpieza de ventanas (por dentro)\n" },
         { text: "• Organización ligera de espacios (alcobas, espacios sociales)\n\n" },
-        
+
         { text: "¿Qué NO incluye?\n", bold: true },
         { text: "• Limpieza post-obra\n" },
         { text: "• Lavado de alfombras o tapetes, lavado de cobijas y/o ropa\n" },
         { text: "• Lavado profundo de techos o paredes\n" },
         { text: "• Uso de químicos o equipos especiales\n" },
         { text: "• Desinfección profunda\n" },
+        { text: "• Traslado o reubicación de muebles, cajas u objetos muy pesados\n" },
       ],
     },
     {
@@ -43,14 +46,19 @@ export default function Home() {
         { text: "• Cocina diaria para hogares o familias\n" },
         { text: "• Uso de ingredientes disponibles en el hogar\n" },
         { text: "• Preparación de almuerzos o cenas sencillas\n" },
-        { text: "• Organización básica del área de cocina al finalizar\n\n" },
+        { text: "• Sugerencia de menú basado en los ingredientes que tengas\n" },
+        { text: "• Preparación de hasta 6 porciones por sesión\n" },
+        { text: "• Lavado de ollas y utensilios utilizados durante la preparación\n\n" },
+
         { text: "¿Qué NO incluye?\n", bold: true },
         { text: "• Servicio de chef profesional\n" },
         { text: "• Menús gourmet o especializados\n" },
         { text: "• Catering o eventos\n" },
         { text: "• Compra de ingredientes\n" },
         { text: "• Preparaciones complejas o técnicas avanzadas\n" },
-        { text: "• Servicio de mesero\n" },
+        { text: "• El servicio se presta con los utensilios disponibles en casa del cliente\n" },
+        { text: "• Servicio de mesero\n\n" },
+        { text: "NOTA IMPORTANTE: No nos hacemos responsables por reacciones alérgicas si el cliente no informa previamente de restricciones alimentarias\n", bold: true },
       ],
     },
     {
@@ -58,20 +66,21 @@ export default function Home() {
       descripcion: "Lavado y planchado de ropa en casa.",
       detalle: [
         { text: "¿Qué SÍ incluye?\n", bold: true },
-        { text: "• Lavado de ropa doméstica\n"  },
-        { text: "• Planchado de prendas básicas\n"  },
-        { text: "• Separación básica de ropa\n"  },
+        { text: "• Lavado de ropa doméstica (Camisetas, jeans, ropa de cama, toallas, etc.)\n"  },
+        { text: "• Planchado de prendas básicas por volumen (hasta 1 hora de planchado)\n"  },
+        { text: "• Doblado tipo tienda\n"  },
+        { text: "• Guardado de ropa en su lugar (con previa autorización del cliente)\n"  },
+        { text: "• Separación básica de ropa y revisión de bolsillos\n"  },
+        { text: "• Uso de metodo de secado proporcionado por el cliente\n"  },
         { text: "• Entrega de la ropa limpia y organizada\n\n"  },
 
         { text: "¿Qué NO incluye?\n", bold: true },
         { text: "• Lavado industrial\n"  },
-        { text: "• Prendas delicadas o de alto valor\n"  },
-        { text: "• Ropa con tratamientos especiales\n"  },
+        { text: "• Prendas delicadas o de alto valor o telas muy costosas\n"  },
+        { text: "• Ropa con tratamientos especiales \n"  },
         { text: "• Servicio de tintorería\n"  },
         { text: "• Arreglos o modificaciones de ropa\n"  },
-
-
-        
+        { text: "• Prendas con manchas de sangre o manchas permanentes (no se garantiza su limpieza total)\n"  },
       ],
     },
     {
@@ -79,9 +88,11 @@ export default function Home() {
       descripcion: "Arreglos básicos del hogar.",
       detalle: [
         { text: "¿Qué SÍ incluye?\n", bold: true },
-        { text: "• Fugas pequeñas de agua. \n"  },
-        { text: "• Ajustes simples de tornillería, carpintería, sistema electrico, cambio de bombillos. \n"  },
-        { text: "• Cambio de guardas, chapas o cerraduras. \n"  },
+        { text: "• Plomería básica: Desatasco de sifones y desagües superficiales, cambio o reparación de herrajes de sanitario, cambio de grifería, etc. \n"  },
+        { text: "• Electricidad básica: Cambio de interruptores, tomas de corriente y lámparas, etc. \n"  },
+        { text: "• Carpintería básica: Ajuste de muebles, puertas de gabinetes y cajones, armado de buebles tipo RTA (Ready To Assemble), etc. \n"  },
+        { text: "• Instalación de accesorios: Soportes de TV, cortinas, cuadros, espejos, etc. \n"  },
+        { text: "• Resane y estética de muros: Tapado de agujeros pequeños, Aplicación de masilla y lijado suave para dejar la superficie lisa, Retoques de pintura en áreas específicas (siempre que el cliente provea la pintura exacta), etc. \n"  },
         { text: "• Reparaciones menores de paredes, tuberías tapadas, cambio de manijas, lubricación de partes moviles\n\n" },
 
         { text: "¿Qué NO incluye?\n", bold: true },
@@ -89,7 +100,8 @@ export default function Home() {
         { text: "• Pintura completa de paredes, pisos, techos, etc.\n"  },
         { text: "• Materiales necesarios para las reparaciones (estos corren por cuenta del cliente)\n"  },
         { text: "• Fugas de gas natural o fluidos peligrosos\n"  },
-        { text: "• Arreglos complejos de chapas o cerraduras\n"  },,
+        { text: "• Arreglos complejos de chapas o cerraduras\n"  },
+        { text: "• Reparación de grietas estructurales, humedades por filtración interna o pañete (revoque) de paredes completas.\n"  },
       ],
     },
   ];

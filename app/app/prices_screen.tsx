@@ -67,7 +67,7 @@ import {
                 onPress={() =>
                   router.push({
                     pathname: "/request_screen",
-                    params: { servicio },
+                    params: { servicio, plan: plan.nombre,precio: plan.precio},
                   })
                 }
               >

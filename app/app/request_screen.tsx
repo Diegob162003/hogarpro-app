@@ -36,9 +36,15 @@ export interface RequestData {
 export default function RequestScreen() {
   /* --- Datos recibidos de la pantalla anterior --- */
   // Nombre del servicio seleccionado (ej: "Limpieza", "Cocina casera")
-  const { servicio } = useLocalSearchParams<{ servicio?: string }>();
+  const { servicio, plan, precio } = useLocalSearchParams<{
+     servicio?: string;
+     plan?: string;
+     precio?: string;}>();
+
   const router = useRouter();
   const servicioStr = String(servicio ?? "");
+  const isStandardPlan = plan === "Servicio Estándar";
+
 
   /* --- Estado del formulario --- */
   // Guarda todo lo que el usuario escribe; se actualiza en cada cambio
@@ -53,6 +59,8 @@ export default function RequestScreen() {
   // Estados para mostrar/ocultar los selectores y guardar valor temporal
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
+  // Días seleccionados para plan estándar
+const [selectedDays, setSelectedDays] = useState<string[]>([]);
 
   /* --- Enviar formulario --- */
   // Se ejecuta al pulsar "Confirmar Solicitud"; navega a confirmación con los datos
@@ -139,6 +147,16 @@ export default function RequestScreen() {
             <Text style={styles.subtitle}>
               Completa los datos para tu solicitud
             </Text>
+          </View>
+
+          <View style={styles.planBox}>
+              <Text style={styles.planText}>
+                  Plan: <Text style={styles.planBold}>{plan}</Text>
+              </Text>
+
+              <Text style={styles.planText}>
+                  Precio: <Text style={styles.planBold}>{precio}</Text>
+              </Text>
           </View>
 
           {/* Caja blanca con los campos del formulario */}
@@ -331,6 +349,23 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingVertical: 18,
   },
+  planBox: {
+    backgroundColor: "#DBEAFE",
+    padding: 12,
+    borderRadius: 12,
+    marginTop: 12,
+  },
+  
+  planText: {
+    color: "#1F2937",
+    fontSize: 15,
+  },
+  
+  planBold: {
+    fontWeight: "bold",
+    color: "#2563EB",
+  },
+  
 });
 
 
