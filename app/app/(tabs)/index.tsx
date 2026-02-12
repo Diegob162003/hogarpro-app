@@ -66,21 +66,20 @@ export default function Home() {
       descripcion: "Lavado y planchado de ropa en casa.",
       detalle: [
         { text: "¿Qué SÍ incluye?\n", bold: true },
-        { text: "• Lavado de ropa doméstica (Camisetas, jeans, ropa de cama, toallas, etc.)\n"  },
-        { text: "• Planchado de prendas básicas por volumen (hasta 1 hora de planchado)\n"  },
-        { text: "• Doblado tipo tienda\n"  },
-        { text: "• Guardado de ropa en su lugar (con previa autorización del cliente)\n"  },
-        { text: "• Separación básica de ropa y revisión de bolsillos\n"  },
-        { text: "• Uso de metodo de secado proporcionado por el cliente\n"  },
-        { text: "• Entrega de la ropa limpia y organizada\n\n"  },
+        { text: "• Lavado de ropa doméstica\n" },
+        { text: "• Planchado de prendas básicas\n" },
+        { text: "• Doblado tipo tienda\n" },
+        { text: "• Guardado de ropa en su lugar\n" },
+        { text: "• Separación básica de ropa\n" },
+        { text: "• Uso de metodo de secado proporcionado por el cliente\n" },
+        { text: "• Entrega organizada\n\n" },
 
         { text: "¿Qué NO incluye?\n", bold: true },
-        { text: "• Lavado industrial\n"  },
-        { text: "• Prendas delicadas o de alto valor o telas muy costosas\n"  },
-        { text: "• Ropa con tratamientos especiales \n"  },
-        { text: "• Servicio de tintorería\n"  },
-        { text: "• Arreglos o modificaciones de ropa\n"  },
-        { text: "• Prendas con manchas de sangre o manchas permanentes (no se garantiza su limpieza total)\n"  },
+        { text: "• Lavado industrial\n" },
+        { text: "• Prendas delicadas\n" },
+        { text: "• Tratamientos especiales\n" },
+        { text: "• Servicio de tintorería\n" },
+        { text: "• Modificaciones de ropa\n" },
       ],
     },
     {
@@ -88,20 +87,17 @@ export default function Home() {
       descripcion: "Arreglos básicos del hogar.",
       detalle: [
         { text: "¿Qué SÍ incluye?\n", bold: true },
-        { text: "• Plomería básica: Desatasco de sifones y desagües superficiales, cambio o reparación de herrajes de sanitario, cambio de grifería, etc. \n"  },
-        { text: "• Electricidad básica: Cambio de interruptores, tomas de corriente y lámparas, etc. \n"  },
-        { text: "• Carpintería básica: Ajuste de muebles, puertas de gabinetes y cajones, armado de buebles tipo RTA (Ready To Assemble), etc. \n"  },
-        { text: "• Instalación de accesorios: Soportes de TV, cortinas, cuadros, espejos, etc. \n"  },
-        { text: "• Resane y estética de muros: Tapado de agujeros pequeños, Aplicación de masilla y lijado suave para dejar la superficie lisa, Retoques de pintura en áreas específicas (siempre que el cliente provea la pintura exacta), etc. \n"  },
-        { text: "• Reparaciones menores de paredes, tuberías tapadas, cambio de manijas, lubricación de partes moviles\n\n" },
+        { text: "• Plomería básica\n" },
+        { text: "• Electricidad básica\n" },
+        { text: "• Carpintería básica\n" },
+        { text: "• Instalación de accesorios\n" },
+        { text: "• Resane de muros\n\n" },
 
         { text: "¿Qué NO incluye?\n", bold: true },
-        { text: "• Trabajos técnicos especializados\n"  },
-        { text: "• Pintura completa de paredes, pisos, techos, etc.\n"  },
-        { text: "• Materiales necesarios para las reparaciones (estos corren por cuenta del cliente)\n"  },
-        { text: "• Fugas de gas natural o fluidos peligrosos\n"  },
-        { text: "• Arreglos complejos de chapas o cerraduras\n"  },
-        { text: "• Reparación de grietas estructurales, humedades por filtración interna o pañete (revoque) de paredes completas.\n"  },
+        { text: "• Trabajos técnicos especializados\n" },
+        { text: "• Pintura completa\n" },
+        { text: "• Materiales\n" },
+        { text: "• Fugas de gas\n" },
       ],
     },
   ];
@@ -125,11 +121,12 @@ export default function Home() {
           >
             <View style={styles.cardHeader}>
               <Text style={styles.cardTitle}>{servicio.titulo}</Text>
-              {/* Flecha sutil */}
               <Text style={styles.arrow}>›</Text>
             </View>
 
-            <Text style={styles.cardDescription}>{servicio.descripcion}</Text>
+            <Text style={styles.cardDescription}>
+              {servicio.descripcion}
+            </Text>
 
             <TouchableOpacity onPress={() => setSelectedService(servicio)}>
               <Text style={styles.verMas}>Ver más</Text>
@@ -138,12 +135,13 @@ export default function Home() {
         ))}
       </ScrollView>
 
-      {/* Modal descripción completa */}
       <Modal visible={!!selectedService} transparent animationType="fade">
         <View style={styles.modalBackground}>
           <View style={styles.modalCard}>
             <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-              <Text style={styles.modalTitle}>{selectedService?.titulo}</Text>
+              <Text style={styles.modalTitle}>
+                {selectedService?.titulo}
+              </Text>
 
               {selectedService?.detalle.map((line: any, index: number) => (
                 <Text
@@ -159,7 +157,9 @@ export default function Home() {
               style={styles.modalButton}
               onPress={() => setSelectedService(null)}
             >
-              <Text style={{ color: "#fff", fontWeight: "bold" }}>Cerrar</Text>
+              <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                Cerrar
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -172,20 +172,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#f5f7fb",
+    paddingTop: 60,
+    backgroundColor: "#EFF6FF",
   },
 
   title: {
     fontSize: 28,
     fontWeight: "bold",
     textAlign: "center",
+    color: "#2563EB",
   },
 
   subtitle: {
     fontSize: 16,
     marginTop: 6,
     textAlign: "center",
-    color: "#6b7280",
+    color: "#1D4ED8",
   },
 
   card: {
@@ -194,6 +196,8 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     marginBottom: 14,
     elevation: 2,
+    borderWidth: 2,
+    borderColor: "#2563EB",
   },
 
   cardHeader: {
@@ -235,7 +239,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 24,
     borderRadius: 16,
-    maxHeight: "70%", // Altura máxima para scroll
+    maxHeight: "70%",
   },
 
   modalTitle: {
@@ -256,7 +260,7 @@ const styles = StyleSheet.create({
   },
 
   modalButton: {
-    backgroundColor: "#2f80ed",
+    backgroundColor: "#2563EB",
     padding: 12,
     borderRadius: 10,
     alignItems: "center",

@@ -75,6 +75,9 @@ const [selectedDays, setSelectedDays] = useState<string[]>([]);
           address: formData.address,
           notes: formData.notes,
           phone: formData.phone,
+
+          plan: plan,
+          precio: precio,
         },
       });
     }
@@ -322,8 +325,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 3,
     elevation: 2,
-    borderWidth: 1,
-    borderColor: "#DBEAFE",
+    borderWidth: 2,
+    borderColor: "#2563EB",
   },
   field: {
     marginBottom: 4,
