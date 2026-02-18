@@ -1,8 +1,8 @@
-# ===============================
+# =====================================
 # Node / Expo / React Native
-# ===============================
+# =====================================
 
-# dependencies
+# Dependencies
 node_modules/
 
 # Expo
@@ -14,12 +14,12 @@ expo-env.d.ts
 # Metro
 .metro-health-check*
 
-# debug logs
+# Logs
 npm-debug.*
 yarn-debug.*
 yarn-error.*
 
-# generated native folders
+# Generated native folders
 /ios
 /android
 
@@ -34,29 +34,34 @@ yarn-error.*
 
 # macOS
 .DS_Store
+
+# Certificates
 *.pem
 
-# Typescript
+# TypeScript cache
 *.tsbuildinfo
 
-# Example app
+# Example apps
 app-example
 
-# ===============================
-# Environment files
-# ===============================
+
+# =====================================
+# Environment files (ALL stacks)
+# =====================================
 
 .env
 .env.*
 .env*.local
 
-# ===============================
-# Python / Flask backend
-# ===============================
 
-# Virtual environments
-backend/venv/
+# =====================================
+# Python / Flask backend
+# =====================================
+
+# Virtual environments (any folder)
 venv/
+.venv/
+*/venv/
 
 # Python cache
 __pycache__/
@@ -72,31 +77,25 @@ __pycache__/
 *.db
 *.sqlite3
 
+# Flask instance data
+backend/instance/
+
 # Logs
 *.log
 
-# ===============================
-# VS Code / Editors
-# ===============================
+
+# =====================================
+# Editors / IDE
+# =====================================
 
 .vscode/
+.idea/
 
-# ===============================
-# Future-proof folders
-# ===============================
 
-# uploads or generated files
+# =====================================
+# Generated or temporary files
+# =====================================
+
 uploads/
 tmp/
 temp/
-
-# Python cache
-__pycache__/
-*.pyc
-
-# Entorno virtual
-backend/venv/
-venv/
-
-# Instancia Flask / bases locales
-backend/instance/
