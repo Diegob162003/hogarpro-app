@@ -1,11 +1,13 @@
-from flask import request, jsonify
+# controllers/request_controller.py
 from database import db
 from models.service_request import ServiceRequest
 from datetime import datetime
 
-def create_request():
-    data = request.get_json()
-
+def create_request(data):
+    """
+    Crea una nueva solicitud en la base de datos usando los datos recibidos.
+    Retorna un dict con información de la solicitud guardada.
+    """
     try:
         # ===== Limpiar precio =====
         raw_price = data.get("price", "0")
@@ -28,11 +30,23 @@ def create_request():
             notes=data.get("notes"),
         )
 
+        # Guardar en la DB
         db.session.add(new_request)
         db.session.commit()
 
-        return jsonify({"message": "Solicitud creada correctamente"}), 201
+        # Retornar info útil para rutas o Telegram
+        return {
+            "id": new_request.id,
+            "service": new_request.service,
+            "plan": new_request.plan,
+            "price": price,
+            "date": data.get("date"),
+            "hour": data.get("hour"),
+            "address": data.get("address"),
+            "phone": data.get("phone"),
+            "notes": data.get("notes")
+        }
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+        raise e  # Lanzamos la excepción para que request_routes.py la capture

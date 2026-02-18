@@ -1,21 +1,47 @@
-# Importa Blueprint desde Flask.
-# Blueprint sirve para organizar rutas en módulos separados,
-# en lugar de poner todas las rutas en app.py.
-from flask import Blueprint
+# routes/request_routes.py
+from flask import Blueprint, request, jsonify
+from controllers.request_controller import create_request as original_create_request
+from utils import enviar_telegram
 
-# Importa la función create_request del controlador.
-# Esa función es la que realmente procesa la solicitud y guarda datos.
-from controllers.request_controller import create_request
-
-# Se crea un Blueprint llamado "requests".
-# El primer parámetro es el nombre interno del módulo de rutas.
-# __name__ ayuda a Flask a ubicar correctamente el archivo.
 request_routes = Blueprint("requests", __name__)
 
-# Aquí se define una ruta HTTP dentro del blueprint.
-# "/requests" es la URL que el frontend va a llamar.
-# methods=["POST"] indica que solo acepta solicitudes POST.
-#
-# Al final se le pasa la función create_request,
-# que será ejecutada cuando alguien haga POST a esa ruta.
-request_routes.route("/requests", methods=["POST"])(create_request)
+@request_routes.route("/requests", methods=["POST"])
+def create_request():
+    # Obtenemos los datos del frontend
+    data = request.json
+
+    try:
+        # 🔹 Guardamos la solicitud en la base de datos usando la función existente
+        resultado_db = original_create_request(data)  # ahora acepta `data`
+
+        # 🔹 Construimos el mensaje para Telegram usando las claves reales
+        mensaje = f"""
+RESUMEN DE SOLICITUD DE LIMPIEZA
+Ticket: SL # -{resultado_db.get('id', '000000')}
+Estado: Solicitud enviada con éxito
+
+PLAN SELECCIONADO
+Plan: {resultado_db.get('plan')}
+Precio: ${resultado_db.get('price')}
+
+INFORMACIÓN DEL SERVICIO
+Fecha: {resultado_db.get('date')}
+Hora: {resultado_db.get('hour')}
+Dirección: {resultado_db.get('address')}
+WhatsApp: {resultado_db.get('phone')}
+Notas: {resultado_db.get('notes')}
+"""
+
+        # 🔹 Enviamos el mensaje al admin por Telegram
+        resultado_telegram = enviar_telegram(mensaje)
+
+        # 🔹 Retornamos la respuesta al frontend
+        return jsonify({
+            "status": "ok",
+            "db_result": resultado_db,
+            "telegram_result": resultado_telegram
+        })
+
+    except Exception as e:
+        # Capturamos errores de DB o Telegram
+        return jsonify({"status": "error", "error": str(e)}), 500

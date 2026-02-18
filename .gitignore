@@ -99,3 +99,6 @@ backend/instance/
 uploads/
 tmp/
 temp/
+
+# Archivos con tokens que no deben subirse
+backend/utils.py
