@@ -1,4 +1,6 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+# ===============================
+# Node / Expo / React Native
+# ===============================
 
 # dependencies
 node_modules/
@@ -9,7 +11,19 @@ dist/
 web-build/
 expo-env.d.ts
 
-# Native
+# Metro
+.metro-health-check*
+
+# debug logs
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# generated native folders
+/ios
+/android
+
+# Native keys & signing
 .kotlin/
 *.orig.*
 *.jks
@@ -18,26 +32,60 @@ expo-env.d.ts
 *.key
 *.mobileprovision
 
-# Metro
-.metro-health-check*
-
-# debug
-npm-debug.*
-yarn-debug.*
-yarn-error.*
-
 # macOS
 .DS_Store
 *.pem
 
-# local env files
-.env*.local
-
-# typescript
+# Typescript
 *.tsbuildinfo
 
+# Example app
 app-example
 
-# generated native folders
-/ios
-/android
+# ===============================
+# Environment files
+# ===============================
+
+.env
+.env.*
+.env*.local
+
+# ===============================
+# Python / Flask backend
+# ===============================
+
+# Virtual environments
+backend/venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Test / type caches
+.pytest_cache/
+.mypy_cache/
+
+# Local databases
+*.db
+*.sqlite3
+
+# Logs
+*.log
+
+# ===============================
+# VS Code / Editors
+# ===============================
+
+.vscode/
+
+# ===============================
+# Future-proof folders
+# ===============================
+
+# uploads or generated files
+uploads/
+tmp/
+temp/
